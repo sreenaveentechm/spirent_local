@@ -26,9 +26,10 @@ def connection_general(test_name,test_path):
     print("ID : %s" %id)
 
     test_end=post_response.json()["url"]
+    test_end_new = test_end.replace("85", "82", 1)
     #time.sleep(60)
 
-    get_response = requests.get(test_end, auth=auth_data )
+    get_response = requests.get(test_end_new, auth=auth_data )
 
     while  True :
         if "resultFilesList"  in get_response.json().keys():
