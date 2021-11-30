@@ -6,8 +6,8 @@ import time
 import os
 def connection_general(test_name,test_path):
 
-    endpoint="http://10.95.208.85:8080/api/"
-    end_running="http://10.95.208.85:8080/api/runningTests/"
+    endpoint="http://10.95.208.82:8080/api/"
+    end_running="http://10.95.208.82:8080/api/runningTests/"
     auth_data=HTTPBasicAuth('sms', 'a1b2c3d4')
 
     name=test_name
@@ -51,8 +51,9 @@ def connection_general(test_name,test_path):
     file_path=download_file(end_2,test_name,test_path)
 
     test_measurmnt=get_response.json()["measurementsUrl"]
+    test_measurmnt_new = test_measurmnt.replace("85", "82", 1)
     #print(test_measurmnt)
-    get_response = requests.get(test_measurmnt, auth=auth_data )
+    get_response = requests.get(test_measurmnt_new, auth=auth_data )
 
     close_connection(test_end)
 
@@ -73,12 +74,14 @@ def download_file(end_2,name,test_path):
     file_path=test_path
 
     receive = requests.get(end_2[1], auth=auth_data ) # First (0) for log and (1) for xls file
+    receive_xls = receive.replace("85", "82", 1)
     with open('%s/test_%s.xls' %(file_path,name),'wb') as f:
-        f.write(receive.content)
+        f.write(receive_xls.content)
 
     if len(end_2)==3:
         receive = requests.get(end_2[2], auth=auth_data ) # First (0) for log and (1) for xls file
+        receive_pcap = receive.replace("85", "82", 1)
         with open('%s/test_%s.pcap' %(file_path,name),'wb') as f:
-            f.write(receive.content)
+            f.write(receive_pcap.content)
 
     return file_path
