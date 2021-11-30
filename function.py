@@ -39,12 +39,12 @@ def connection_general(test_name,test_path):
             else:
                 time.sleep(10)
                 print("Waiting for test ...")
-                get_response = requests.get(test_end, auth=auth_data )
+                get_response = requests.get(test_end_new, auth=auth_data )
         else:
                 time.sleep(10)
                 print("Waiting for test ...")
                 #print(get_response.json().keys())
-                get_response = requests.get(test_end, auth=auth_data )   
+                get_response = requests.get(test_end_new, auth=auth_data )   
 
 
     end_2 = get_response.json()["resultFilesList"]
@@ -56,16 +56,16 @@ def connection_general(test_name,test_path):
     #print(test_measurmnt)
     get_response = requests.get(test_measurmnt_new, auth=auth_data )
 
-    close_connection(test_end)
+    close_connection(test_end_new)
 
     return id,get_response,file_path
 
-def close_connection(test_end):
+def close_connection(test_end_new):
     #STOP test session
     auth_data=HTTPBasicAuth('sms', 'a1b2c3d4')
-    post_response = requests.post(test_end+'?action=stop', auth=auth_data )
+    post_response = requests.post(test_end_new+'?action=stop', auth=auth_data )
     time.sleep(5)
-    del_response=requests.delete(test_end,auth=auth_data)
+    del_response=requests.delete(test_end_new,auth=auth_data)
 
 def download_file(end_2,name,test_path):
 
