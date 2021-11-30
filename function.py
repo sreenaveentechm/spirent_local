@@ -74,15 +74,15 @@ def download_file(end_2,name,test_path):
     #####COMPLETE SPECIFIC PATH OF XLS AND PCAP FILES
     file_path=test_path
 
-    receive = requests.get(end_2[1], auth=auth_data ) # First (0) for log and (1) for xls file
-    receive_xls = receive.replace("85", "82", 1)
+    receive = requests.get(end_2[1].replace("85", "82", 1), auth=auth_data ) # First (0) for log and (1) for xls file
+    #receive_xls = receive.replace("85", "82", 1)
     with open('%s/test_%s.xls' %(file_path,name),'wb') as f:
-        f.write(receive_xls.content)
+        f.write(receive.content)
 
     if len(end_2)==3:
-        receive = requests.get(end_2[2], auth=auth_data ) # First (0) for log and (1) for xls file
-        receive_pcap = receive.replace("85", "82", 1)
+        receive = requests.get(end_2[2].replace("85", "82", 1), auth=auth_data ) # First (0) for log and (1) for xls file
+        #receive_pcap = receive.replace("85", "82", 1)
         with open('%s/test_%s.pcap' %(file_path,name),'wb') as f:
-            f.write(receive_pcap.content)
+            f.write(receive.content)
 
     return file_path
